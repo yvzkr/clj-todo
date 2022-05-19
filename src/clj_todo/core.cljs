@@ -7,6 +7,7 @@
    [clj-todo.views :as views]
    [clj-todo.config :as config]
    [clj-todo.todos-index.views]
+   [clj-todo.todo-view.views]
    ))
 
 

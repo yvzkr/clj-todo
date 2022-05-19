@@ -12,7 +12,9 @@
   (atom
     ["/" {""      :home
           "about" :about
-          "todos" :todos-index }]))
+          "todos"  {
+                      "" :todos-index
+                      ["/" :id] :todo-view}}]))
 
 (defn parse
   [url]
