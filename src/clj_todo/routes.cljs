@@ -11,7 +11,8 @@
 (def routes
   (atom
     ["/" {""      :home
-          "about" :about}]))
+          "about" :about
+          "todos" :todos-index }]))
 
 (defn parse
   [url]

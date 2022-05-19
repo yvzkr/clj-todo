@@ -6,6 +6,7 @@
    [clj-todo.routes :as routes]
    [clj-todo.views :as views]
    [clj-todo.config :as config]
+   [clj-todo.todos-index.views]
    ))
 
 
