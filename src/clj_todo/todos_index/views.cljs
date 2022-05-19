@@ -13,10 +13,10 @@
         [:td  remark]
         [:td  
         [:a { :on-click #(re-frame/dispatch [::events/navigate [:todo-view :id id]]) }
-        "Edit"]        
+        "Edit"]
         " | "
         [:a { :on-click #(re-frame/dispatch [::events/navigate [:todo-view :id id]]) }
-        "Delete"]  
+        "Delete"]
         ]        
     ])
 
