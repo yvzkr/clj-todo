@@ -8,6 +8,11 @@
    (:name db)))
 
 (re-frame/reg-sub
- ::active-panel
- (fn [db _]
-   (:active-panel db)))
+  ::active-panel
+  (fn [db _]
+    (get-in  db [:route :panel])))   ;(:active-panel db)))
+
+(re-frame/reg-sub
+  ::route-params
+  (fn [db _]
+    (get-in  db [:route :route :route-params])))  

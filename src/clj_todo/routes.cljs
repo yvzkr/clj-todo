@@ -11,7 +11,10 @@
 (def routes
   (atom
     ["/" {""      :home
-          "about" :about}]))
+          "about" :about
+          "todos"  {
+                      "" :todos-index
+                      ["/" :id] :todo-view}}]))
 
 (defn parse
   [url]
@@ -24,14 +27,16 @@
 (defn dispatch
   [route]
   (let [panel (keyword (str (name (:handler route)) "-panel"))]
-    (re-frame/dispatch [::events/set-active-panel panel])))
+    #_(re-frame/dispatch [::events/set-active-panel panel])
+    (re-frame/dispatch [::events/set-route {:route route :panel panel}])
+    ))
 
 (defonce history
   (pushy/pushy dispatch parse))
 
 (defn navigate!
   [handler]
-  (pushy/set-token! history (url-for handler)))
+  (pushy/set-token! history (apply url-for handler)))
 
 (defn start!
   []

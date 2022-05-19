@@ -14,10 +14,7 @@
     [:div
      [:h1
       (str "Hello from " @name ". This is the Home Page.")]
-
-     [:div
-      [:a {:on-click #(re-frame/dispatch [::events/navigate :about])}
-       "go to About Page"]]
+     [:div ]
      ]))
 
 (defmethod routes/panels :home-panel [] [home-panel])
@@ -34,8 +31,23 @@
 
 (defmethod routes/panels :about-panel [] [about-panel])
 
+;; header
+
+(def header-links
+  [:div#header-links
+   "[ "
+   [:a {:on-click #(re-frame/dispatch [::events/navigate [:home]])}
+     "Home"]
+    " | "
+    [:a {:on-click #(re-frame/dispatch [::events/navigate [:todos-index]])}
+    "Todos"]
+   " ]"])
+
+
 ;; main
 
 (defn main-panel []
   (let [active-panel (re-frame/subscribe [::subs/active-panel])]
-    (routes/panels @active-panel)))
+  
+  [:div header-links
+    [:div (routes/panels @active-panel)]]))
