@@ -1,7 +1,8 @@
 (ns clj-todo.todos-index.views
     (:require [re-frame.core :as re-frame]
               [clj-todo.todos-index.subs :as subs]
-              [clj-todo.routes :as routes]))
+              [clj-todo.routes :as routes]
+              [clj-todo.events :as events]))
 
 
 
@@ -10,7 +11,13 @@
     [:tr {:key id}
         [:td  title]
         [:td  remark]
-        [:td  "Delete"]        
+        [:td  
+        [:a { :on-click #(re-frame/dispatch [::events/navigate [:todo-view :id id]]) }
+        "Edit"]        
+        " | "
+        [:a { :on-click #(re-frame/dispatch [::events/navigate [:todo-view :id id]]) }
+        "Delete"]  
+        ]        
     ])
 
 
@@ -22,7 +29,7 @@
             (str "Todo List")]
             [:table {:class "todos"}
             [:thead 
-            [:tr [:th "Title"] [:th "Description"] [:th "Delete"]]]
+            [:tr [:th "Title"] [:th "Description"] [:th ""]]]
             [:tbody            
             (map display-todo @todos)
             ] ]               
