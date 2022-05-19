@@ -38,8 +38,10 @@
    "[ "
    [:a {:on-click #(re-frame/dispatch [::events/navigate [:home]])}
      "Home"]
+    " | "
+    [:a {:on-click #(re-frame/dispatch [::events/navigate [:todos-index]])}
+    "Todos"]
    " ]"])
-
 
 
 ;; main
