@@ -6,25 +6,52 @@ body {
     overflow: hidden;
 }
 
-.todos {
+.todos-table {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
 }
 
-.todos td, .todos th {
+.todos-table td, .todos-table th {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
-.todos tr:nth-child(even){background-color: #f2f2f2;}
+.todos-table tr:nth-child(even){background-color: #f2f2f2;}
 
-.todos tr:hover {background-color: #ddd;}
+.todos-table tr:hover {background-color: #ddd;}
 
-.todos th {
+.todos-table th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
     background-color: #047a4f;
     color: white;
+}
+
+.todos-table-set-th{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #047a4f;
+    color: white;
+    width: 100px;
+
+}
+
+.todos-container {
+    width: 60%;
+    height: 100%;
+    position: relative;
+}
+
+
+.refresh-btn {   
+    top: 0;
+    right: 0;
+    padding: 10px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    cursor: pointer;
 }

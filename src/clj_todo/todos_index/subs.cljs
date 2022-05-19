@@ -8,3 +8,9 @@
     ::todos
     (fn [db _]
         (:todos db)))
+
+
+(re-frame/reg-sub
+    ::loading
+    (fn [db]
+        (:loading db)))
