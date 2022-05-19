@@ -27,10 +27,6 @@
     [:button {:on-click #(re-frame/dispatch [::events/fetch-todos]) :class "refresh-btn"} "Refresh"]
 )
 
-
-
-
-
 (defn todos-index []
     (let [todos (re-frame/subscribe [::subs/todos] )
         loading (re-frame/subscribe [::subs/loading])
