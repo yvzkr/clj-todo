@@ -24,3 +24,11 @@
   ::set-route
   (fn-traced [{:keys [db]} [_ route]]
     {:db (assoc db :route route)}))
+
+
+
+
+(re-frame/reg-event-db
+  ::update-name
+  (fn [db [_ val]] ; val arg
+    (assoc db :name val)))

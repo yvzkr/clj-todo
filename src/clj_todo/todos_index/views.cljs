@@ -22,6 +22,10 @@
 
 
 
+
+
+
+
 (defn todos-index []
     (let [todos (re-frame/subscribe [::subs/todos] )]
         [:div
@@ -32,7 +36,8 @@
             [:tr [:th "Title"] [:th "Description"] [:th ""]]]
             [:tbody            
             (map display-todo @todos)
-            ] ]               
+            ] ]
+
         ]
         ))
 
