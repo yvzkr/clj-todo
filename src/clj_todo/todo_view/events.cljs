@@ -50,6 +50,18 @@
 )
 
 
+(re-frame/reg-event-db
+    ::failure-request-update-todo
+    (fn [db [_ result]]
+        (let [ ]
+            (-> db
+                (assoc :updated-error true)
+            )
+        )
+    )
+)
+
+
 (re-frame/reg-event-fx
     ::request-update-todo
     (fn [{:keys [db]} _]
@@ -81,3 +93,5 @@
     ::close-edit-form
     (fn [db [_ ]]
       (dissoc db :edit-form)))
+
+

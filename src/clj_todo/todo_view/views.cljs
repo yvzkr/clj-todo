@@ -4,6 +4,7 @@
               [clj-todo.todo-view.subs :as subs]
               [clj-todo.subs :as route-subs]
               [clj-todo.todo-view.events :as events]
+              [clj-todo.events :as route-events]
               ) 
     )
 
@@ -38,10 +39,19 @@
     )
 )
 
+
 (defn edit-todo-form [todo]
     (let [  is-valid? @(re-frame/subscribe [::subs/form-is-valid? [:title]])
-            request-update-error (re-frame/subscribe [::subs/updated-error]) ]
+            request-update-error (re-frame/subscribe [::subs/updated-error])
+          ]
         [:div {:class "create-todo-form"}
+         [:div 
+          
+           [:a {:on-click (fn[]
+                            (re-frame/dispatch [::events/close-edit-form])
+                            (re-frame/dispatch [::route-events/navigate [:todos-index]])
+                            )} "Back"]
+          ]
          [:div
           [:h1 "Todo Detail"]
           [:li
@@ -60,7 +70,7 @@
            (when @request-update-error
              [:div {:class "notification is-danger"}
               [:h1 (str "Error Update Todo")]
-              [:button {:class "delete" :on-click #(re-frame/dispatch [::events/clear-request-delete-todo-error])} "Done"]])
+              [:button {:class "delete" :on-click #(re-frame/dispatch [::events/clear-update-todo-error])} ]])
            [:button.button.is-primary
             {:disabled (not is-valid?)
              :on-click #(re-frame/dispatch [::events/request-update-todo])}
@@ -79,11 +89,8 @@
 
 (defn todo-view []
     (let [route-params @(re-frame/subscribe [::route-subs/route-params])
-          todo @(re-frame/subscribe [::subs/todo (:id route-params)])
-         
-          ]
-
-      [:div (str "The selected todo is " (:title todo))]
+          todo @(re-frame/subscribe [::subs/todo (:id route-params)])         
+          ]     
       [:div
        [edit-todo-form todo]])
 )
