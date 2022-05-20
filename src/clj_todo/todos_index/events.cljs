@@ -68,12 +68,27 @@
     )
 )
 
+(re-frame/reg-event-db
+    ::failure-request-create-todo
+    (fn [db [_ result]]
+        (let [ todos (get db :todos [])
+               updated-todos (conj todos result)               
+               ]
+            (-> db
+                (assoc :todos updated-todos)
+                (assoc :loading false)
+                
+            )
+        )
+    )
+)
+
 
 (re-frame/reg-event-fx
     ::request-create-todo
-    (fn [_world]
-        (let [db (:db _world)
-              updated-form (:form db) ]
+    (fn [{:keys [db]} _]
+        (let [form_data (:form db)
+              updated-form form_data ]
              {:http-xhrio {:method          :post
                            :uri             "https://my-json-server.typicode.com/yvzkr/todo-json/todos"
                            :params          updated-form
@@ -81,7 +96,7 @@
                            :format          (ajax/json-request-format)
                            :response-format (ajax/json-response-format {:keywords? true})
                            :on-success      [::success-request-create-todo]
-                           :on-failure      [::failure-post-result]}}
+                           :on-failure      [::failure-request-create-todo]}}
         )
     )
 )
