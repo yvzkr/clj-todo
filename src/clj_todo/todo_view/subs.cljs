@@ -28,7 +28,9 @@
     (fn [db]
         (:updated-error db)))
 
+
 (re-frame/reg-sub
-    ::load-todo-edit-form
-    (fn [db [_ todo]]
-        (assoc db :edit-form todo)))
+    ::request-update-success
+    (fn [db]
+        (:request-update-success db)))
+
