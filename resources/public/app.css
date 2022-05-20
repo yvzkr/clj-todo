@@ -40,6 +40,13 @@ body {
 }
 
 .todos-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+
+.todos-table-container {
     width: 60%;
     height: 100%;
     position: relative;
@@ -54,4 +61,20 @@ body {
     color: white;
     border: none;
     cursor: pointer;
+}
+
+.create-todo-form{
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    margin-top: 20px;
+    background-color: #f2f2f2;
+    padding: 10px;
+}
+
+.page-title{
+    text-align: center;
+    margin-top: 20px;
+    font-size: large;
 }

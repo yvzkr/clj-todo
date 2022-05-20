@@ -14,3 +14,23 @@
     ::loading
     (fn [db]
         (:loading db)))
+
+
+(re-frame/reg-sub
+    ::form
+    (fn [db [_ id]]
+        (get-in db [:form id] "")
+    )
+)
+
+(re-frame/reg-sub
+    ::form-is-valid?
+    (fn [db [_ form_ids]]
+        (every? #(get-in db [:form %]) form_ids)
+    )
+)
+
+(re-frame/reg-sub
+    ::created-error
+    (fn [db]
+        (:created-error db)))

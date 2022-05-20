@@ -27,22 +27,89 @@
     [:button {:on-click #(re-frame/dispatch [::events/fetch-todos]) :class "refresh-btn"} "Refresh"]
 )
 
+(defn text-input [id label]
+    (let [value (re-frame/subscribe [::subs/form id])]
+        [:div.field 
+            [:label.label label]
+            [:div.control
+                [:input.input { :value @value
+                                :on-change #(re-frame/dispatch [::events/update-form id (-> % .-target .-value)])       
+                                :type "text" 
+                                :placeholder "Text input"}] 
+            ]
+        ]
+    )
+)
+
+
+(defn textarea-input [id label]
+    (let [value (re-frame/subscribe [::subs/form id])]
+        [:div.field 
+            [:label.label label]
+            [:div.control
+                [:textarea {:value @value
+                            :on-change #(re-frame/dispatch [::events/update-form id (-> % .-target .-value)])       
+                            :class "textarea"
+                            :placeholder "Text Input"}]
+            ]
+        ]
+    )
+)
+
+
+
+(defn new-todo-form []
+    (let [
+            is-valid? @(re-frame/subscribe [::subs/form-is-valid? [:title]])
+            created-error (re-frame/subscribe [::subs/created-error])
+         ]
+        [:div {:class "create-todo-form"}
+            [:h1 {:class "page-title"} (str "Create New Todo")]
+            
+            [text-input :title "Title"]
+            [textarea-input :remark "Remark"]
+            (when @created-error
+                [:div {:class "notification is-danger"}
+                    [:h1 (str "Error create Todo")]
+                    [:button {:class "delete" :on-click #(re-frame/dispatch [::events/clear-create-todo-error])} "Done"]
+                ]
+            )
+
+            [:button.button.is-primary 
+                { :disabled (not is-valid?)
+                  :on-click #(re-frame/dispatch [::events/request-create-todo])}
+                  "Save"
+            ]
+        ]
+    )
+
+)
+
+
+;;main todo-index
 (defn todos-index []
     (let [todos (re-frame/subscribe [::subs/todos] )
-        loading (re-frame/subscribe [::subs/loading])
-        ]
+          loading (re-frame/subscribe [::subs/loading])
+         ]
         [:div {:class "todos-container"}
-            [:h1
-            (str "Todo List")]
-            (when @loading "Loading...")
-            [:table {:class "todos-table"}
-            [:thead 
-            [:tr [:th "Title"] [:th "Description"] [:th {:class "todos-table-set-th"} [fetch-todos-button]]]]
-            [:tbody            
-            (map display-todo @todos)
-            ] ]
+            [:div
+                [new-todo-form]
+            ]
+            [:div {:class "todos-table-container"}
+                [:h1 {:class "page-title"} (str "Todo List")]
+                (when @loading "Loading...")
+                [:table {:class "todos-table"}
+                    [:thead 
+                        [:tr [:th "Title"] [:th "Description"] [:th {:class "todos-table-set-th"} [fetch-todos-button]]]]
+                    [:tbody
+                        (map display-todo @todos)
+                    ]
+                ]
+            ]
+            
         ]
-        ))
+    )
+)
 
 
 (defmethod routes/panels :todos-index-panel [] [todos-index])
