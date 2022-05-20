@@ -34,3 +34,9 @@
     ::created-error
     (fn [db]
         (:created-error db)))
+
+
+(re-frame/reg-sub
+    ::request-delete-todo-error
+    (fn [db]
+        (:request-delete-todo-error db)))

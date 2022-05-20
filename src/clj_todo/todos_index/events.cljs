@@ -104,3 +104,40 @@
     (fn [db]
       (assoc db :created-error false)))
   
+
+
+
+(re-frame/reg-event-fx
+    ::request-delete-todo
+    (fn [_world [_ val] ]
+        (let [
+                get-url (str "https://my-json-server.typicode.com/yvzkr/todo-json/todos/" val "/" )
+            ]
+            {:http-xhrio {:method            :delete
+                            :uri             get-url
+                            :params          {}
+                            :timeout         5000
+                            :format          (ajax/json-request-format)
+                            :response-format (ajax/json-response-format {:keywords? true})
+                            :on-success      [::fetch-todos ]
+                            :on-failure      [::failure-request-delete-todo]}}
+        )
+    )
+)
+
+(re-frame/reg-event-db
+    ::failure-request-delete-todo
+    (fn [db [_ result]]
+        (let [ ]
+            (-> db
+                (assoc :request-delete-todo-error true)
+            )
+        )
+    )
+)
+
+
+(re-frame/reg-event-db
+    ::clear-request-delete-todo-error
+    (fn [db]
+      (assoc db :request-delete-todo-error false)))

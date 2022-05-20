@@ -18,7 +18,7 @@
         [:a { :on-click #(re-frame/dispatch [::route-events/navigate [:todo-view :id id]]) }
         "Edit"]
         " | "
-        [:a { :on-click #(re-frame/dispatch [::route-events/navigate [:todo-view :id id]]) }
+        [:a { :on-click #(re-frame/dispatch [::events/request-delete-todo id]) }
         "Delete"]
         ]        
     ])
@@ -90,6 +90,7 @@
 (defn todos-index []
     (let [todos (re-frame/subscribe [::subs/todos] )
           loading (re-frame/subscribe [::subs/loading])
+          request-delete-todo-error (re-frame/subscribe [::subs/request-delete-todo-error])
          ]
         [:div {:class "todos-container"}
             [:div
@@ -98,6 +99,12 @@
             [:div {:class "todos-table-container"}
                 [:h1 {:class "page-title"} (str "Todo List")]
                 (when @loading "Loading...")
+                (when @request-delete-todo-error
+                    [:div {:class "notification is-danger"}
+                        [:h1 (str "Error Delete Todo")]
+                        [:button {:class "delete" :on-click #(re-frame/dispatch [::events/clear-request-delete-todo-error])} "Done"]
+                    ]
+                )
                 [:table {:class "todos-table"}
                     [:thead 
                         [:tr [:th "Title"] [:th "Description"] [:th {:class "todos-table-set-th"} [fetch-todos-button]]]]
