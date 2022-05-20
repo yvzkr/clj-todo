@@ -57,7 +57,7 @@
     ::success-request-create-todo
     (fn [db [_ result]]
         (let [ todos (get db :todos [])
-               updated-todos (conj todos result)               
+               updated-todos (conj todos result)
                ]
             (-> db
                 (assoc :todos updated-todos)
