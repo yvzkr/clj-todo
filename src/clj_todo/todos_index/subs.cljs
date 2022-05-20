@@ -22,3 +22,10 @@
         (get-in db [:form id] "")
     )
 )
+
+(re-frame/reg-sub
+    ::form-is-valid?
+    (fn [db [_ form_ids]]
+        (every? #(get-in db [:form %]) form_ids)
+    )
+)

@@ -58,18 +58,21 @@
 
 
 
-
 (defn new-todo-form []
-    [:div {}
-        [:h1 (str "Create New Todo")]
-        [text-input :title "Title"]
-        [textarea-input :remark "textarea"]
+    (let [is-valid? @(re-frame/subscribe [::subs/form-is-valid? [:title]])]
+        [:div {}
+            [:h1 (str "Create New Todo")]
+            [text-input :title "Title"]
+            [textarea-input :remark "Remark"]
 
-        [:button.button.is-primary 
-            { :on-click #(re-frame/dispatch [::events/save-todo-form])}
-            "Save"
+            [:button.button.is-primary 
+                { :disabled (not is-valid?)
+                  :on-click #(re-frame/dispatch [::events/save-todo-form])}
+                  "Save"
+            ]
         ]
-    ]
+    )
+
 )
 
 
