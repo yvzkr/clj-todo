@@ -86,7 +86,7 @@
         (let [form_data (:form db)
               updated-form form_data ]
              {:http-xhrio {:method          :post
-                           :uri             "https://my-json-serve.typicode.com/yvzkr/todo-json/todos"
+                           :uri             "https://my-json-server.typicode.com/yvzkr/todo-json/todos"
                            :params          updated-form
                            :timeout         5000
                            :format          (ajax/json-request-format)

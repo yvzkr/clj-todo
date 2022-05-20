@@ -64,7 +64,7 @@
             created-error (re-frame/subscribe [::subs/created-error])
          ]
         [:div {:class "create-todo-form"}
-            [:h1 (str "Create New Todo")]
+            [:h1 {:class "page-title"} (str "Create New Todo")]
             
             [text-input :title "Title"]
             [textarea-input :remark "Remark"]
@@ -95,8 +95,8 @@
             [:div
                 [new-todo-form]
             ]
-            [:div {:class "todos-table-container"}        
-                [:h1 (str "Todo List")]
+            [:div {:class "todos-table-container"}
+                [:h1 {:class "page-title"} (str "Todo List")]
                 (when @loading "Loading...")
                 [:table {:class "todos-table"}
                     [:thead 
