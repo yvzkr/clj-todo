@@ -29,3 +29,8 @@
         (every? #(get-in db [:form %]) form_ids)
     )
 )
+
+(re-frame/reg-sub
+    ::created-error
+    (fn [db]
+        (:created-error db)))

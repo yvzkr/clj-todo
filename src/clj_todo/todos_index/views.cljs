@@ -59,11 +59,21 @@
 
 
 (defn new-todo-form []
-    (let [is-valid? @(re-frame/subscribe [::subs/form-is-valid? [:title]])]
-        [:div {}
+    (let [
+            is-valid? @(re-frame/subscribe [::subs/form-is-valid? [:title]])
+            created-error (re-frame/subscribe [::subs/created-error])
+         ]
+        [:div {:class "create-todo-form"}
             [:h1 (str "Create New Todo")]
+            
             [text-input :title "Title"]
             [textarea-input :remark "Remark"]
+            (when @created-error
+                [:div {:class "notification is-danger"}
+                    [:h1 (str "Error create Todo")]
+                    [:button {:class "delete" :on-click #(re-frame/dispatch [::events/clear-create-todo-error])} "Done"]
+                ]
+            )
 
             [:button.button.is-primary 
                 { :disabled (not is-valid?)
@@ -79,9 +89,12 @@
 ;;main todo-index
 (defn todos-index []
     (let [todos (re-frame/subscribe [::subs/todos] )
-        loading (re-frame/subscribe [::subs/loading])
-        ]
+          loading (re-frame/subscribe [::subs/loading])
+         ]
         [:div {:class "todos-container"}
+            [:div
+                [new-todo-form]
+            ]
             [:div {:class "todos-table-container"}        
                 [:h1 (str "Todo List")]
                 (when @loading "Loading...")
@@ -93,9 +106,7 @@
                     ]
                 ]
             ]
-            [:div
-                [new-todo-form]
-            ]
+            
         ]
     )
 )

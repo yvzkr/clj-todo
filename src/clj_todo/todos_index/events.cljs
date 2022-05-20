@@ -71,13 +71,9 @@
 (re-frame/reg-event-db
     ::failure-request-create-todo
     (fn [db [_ result]]
-        (let [ todos (get db :todos [])
-               updated-todos (conj todos result)               
-               ]
+        (let [ ]
             (-> db
-                (assoc :todos updated-todos)
-                (assoc :loading false)
-                
+                (assoc :created-error true)
             )
         )
     )
@@ -90,7 +86,7 @@
         (let [form_data (:form db)
               updated-form form_data ]
              {:http-xhrio {:method          :post
-                           :uri             "https://my-json-server.typicode.com/yvzkr/todo-json/todos"
+                           :uri             "https://my-json-serve.typicode.com/yvzkr/todo-json/todos"
                            :params          updated-form
                            :timeout         5000
                            :format          (ajax/json-request-format)
@@ -101,3 +97,10 @@
     )
 )
 
+
+
+(re-frame/reg-event-db
+    ::clear-create-todo-error
+    (fn [db]
+      (assoc db :created-error false)))
+  
