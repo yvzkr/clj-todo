@@ -32,3 +32,25 @@
 )
 
 
+;;form event
+(re-frame/reg-event-db
+    ::update-form
+    (fn [db [_ id val]]
+        (assoc-in db [:form id ] val )))
+
+(re-frame/reg-event-db
+    ::save-todo-form
+    (fn [db]
+        (let [form-data (:form db)
+            todos (get db :todos [])
+            updated-todos (conj todos { :id (+ 1 (count todos)) :title (:title form-data) })]
+            (-> db
+                (assoc :todos updated-todos); ata
+                (dissoc :form )             ; sil
+            )
+        )
+    )
+)
+
+
+

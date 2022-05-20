@@ -14,3 +14,11 @@
     ::loading
     (fn [db]
         (:loading db)))
+
+
+(re-frame/reg-sub
+    ::form
+    (fn [db [_ id]]
+        (get-in db [:form id] "")
+    )
+)
