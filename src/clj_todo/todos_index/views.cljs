@@ -53,7 +53,7 @@
                             :placeholder "Text Input"}]
             ]
         ]
-    )        
+    )
 )
 
 
@@ -67,7 +67,7 @@
 
             [:button.button.is-primary 
                 { :disabled (not is-valid?)
-                  :on-click #(re-frame/dispatch [::events/save-todo-form])}
+                  :on-click #(re-frame/dispatch [::events/request-create-todo])}
                   "Save"
             ]
         ]
