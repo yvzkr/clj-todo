@@ -82,7 +82,6 @@
             ]
         ]
     )
-
 )
 
 
@@ -91,6 +90,7 @@
     (let [todos (re-frame/subscribe [::subs/todos] )
           loading (re-frame/subscribe [::subs/loading])
           request-delete-todo-error (re-frame/subscribe [::subs/request-delete-todo-error])
+                   
          ]
         [:div {:class "todos-container"}
             [:div
