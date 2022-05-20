@@ -19,6 +19,12 @@
     (fn [db]
         (assoc db :updated-error false)))
 
+
+(re-frame/reg-event-db
+    ::clear-update-todo-success
+    (fn [db]
+        (assoc db :request-update-success false)))
+
 (re-frame/reg-event-db
     ::save-todo-form
     (fn [db]
@@ -39,12 +45,13 @@
     ::success-request-update-todo
     (fn [db [_ result]]
         (let [ todos (get db :todos [])
-               updated-todos todos
+               updated-todos todos ;; find and update item
                ]
             (-> db
                 (assoc :todos updated-todos)
-                (assoc :loading false)
-                (dissoc :edit-form))
+                (assoc :request-update-success true)
+                ;(dissoc :edit-form)
+                )
         )
     )
 )
@@ -53,12 +60,9 @@
 (re-frame/reg-event-db
     ::failure-request-update-todo
     (fn [db [_ result]]
-        (let [ ]
-            (-> db
-                (assoc :updated-error true)
-            )
-        )
-    )
+      (let []
+        (-> db
+            (assoc :updated-error true))))
 )
 
 

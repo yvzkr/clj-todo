@@ -3,12 +3,10 @@
    [re-frame.core :as re-frame]
    [clj-todo.events :as events]
    [clj-todo.routes :as routes]
-   [clj-todo.subs :as subs]
-   ))
+   [clj-todo.subs :as subs]))
 
-(defn display-update-name-button []  
-  [:button {:on-click #(re-frame/dispatch [::events/update-name "yesyes"])} "update name"]
-)
+(defn display-update-name-button []
+  [:button {:on-click #(re-frame/dispatch [::events/update-name "yesyes"])} "update name"])
 
 
 
@@ -19,10 +17,8 @@
     [:div
      [:h1
       (str "Hello from " @name ". This is the Home Page.")]
-     [:div 
-        [display-update-name-button]
-     ]
-     ]))
+     [:div
+      [display-update-name-button]]]))
 
 (defmethod routes/panels :home-panel [] [home-panel])
 
@@ -31,7 +27,6 @@
 (defn about-panel []
   [:div
    [:h1 "This is the About Page."]
-
    [:div
     [:a {:on-click #(re-frame/dispatch [::events/navigate :home])}
      "go to Home Page"]]])
@@ -44,9 +39,9 @@
   [:div#header-links
    "[ "
    [:a {:on-click #(re-frame/dispatch [::events/navigate [:home]])}
-     "Home"]
-    " | "
-    [:a {:on-click #(re-frame/dispatch [::events/navigate [:todos-index]])}
+    "Home"]
+   " | "
+   [:a {:on-click #(re-frame/dispatch [::events/navigate [:todos-index]])}
     "Todos"]
    " ]"])
 
@@ -55,6 +50,5 @@
 
 (defn main-panel []
   (let [active-panel (re-frame/subscribe [::subs/active-panel])]
-  
-  [:div header-links
-    [:div (routes/panels @active-panel)]]))
+    [:div header-links
+     [:div (routes/panels @active-panel)]]))
