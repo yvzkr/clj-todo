@@ -36,7 +36,7 @@
 ;; header
 
 (def header-links
-  [:div#header-links
+  [:div#header-links {:class "header-menu"}
    "[ "
    [:a {:on-click #(re-frame/dispatch [::events/navigate [:home]])}
     "Home"]
@@ -50,5 +50,7 @@
 
 (defn main-panel []
   (let [active-panel (re-frame/subscribe [::subs/active-panel])]
-    [:div header-links
-     [:div (routes/panels @active-panel)]]))
+    [:div 
+     [:div {:class "wrapper"} header-links]
+     [:div {:class "page-content"} (routes/panels @active-panel)]]
+    ))

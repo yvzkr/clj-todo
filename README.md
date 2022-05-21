@@ -194,3 +194,18 @@ Please be patient; it may take over 15 seconds to see any output, and over 30 se
 
 The `resources/public/js/compiled` directory is created, containing the compiled `app.js` and
 `manifest.edn` files.
+
+
+## Mock server
+if you initial api 
+open console in project root and run json-server --watch db.json
+
+Note: If you trouble about json-server, like the following:
+
+```sh 
+json-server requires at least version 12 of Node
+
+```
+
+please check [this](https://medium.com/@yavuz255/json-server-requires-at-least-version-12-of-node-please-upgrade-problem-2a21b9fa41c7)
+

@@ -11,13 +11,14 @@
 (re-frame/reg-event-fx
     ::fetch-todos
     (fn [{:keys [db]} _]
-        {:db (assoc db :loading true)
+      (let [api-url (:api-url db)]{:db (assoc db :loading true)
         :http-xhrio {:method          :get
-                    :uri             "https://my-json-server.typicode.com/yvzkr/todo-json/todos"
-                    :timeout         8000                                           ;; optional see API docs
-                    :response-format (ajax/json-response-format {:keywords? true})  ;; IMPORTANT!: You must provide this.
+                    :uri             api-url
+                    :timeout         8000
+                    :response-format (ajax/json-response-format {:keywords? true})
                     :on-success      [::fetch-todos-success]
-                    :on-failure      [:bad-http-result]}}))
+                    :on-failure      [:bad-http-result]}})
+        ))
 
 
 
@@ -84,9 +85,10 @@
     ::request-create-todo
     (fn [{:keys [db]} _]
         (let [form_data (:form db)
+              api-url (:api-url db)
               updated-form form_data ]
              {:http-xhrio {:method          :post
-                           :uri             "https://my-json-server.typicode.com/yvzkr/todo-json/todos"
+                           :uri             api-url
                            :params          updated-form
                            :timeout         5000
                            :format          (ajax/json-request-format)

@@ -37,17 +37,6 @@
                      :placeholder "Text input"}]]]))
 
 
-(defn textarea-input [id label]
-  (let [value (re-frame/subscribe [::subs/form id])]
-    [:div.field
-     [:label.label label]
-     [:div.control
-      [:textarea {:value @value
-                  :on-change #(re-frame/dispatch [::events/update-form id (-> % .-target .-value)])
-                  :class "textarea"
-                  :placeholder "Text Input"}]]]))
-
-
 (defn new-todo-form []
   (let [is-valid? @(re-frame/subscribe [::subs/form-is-valid? [:title]])
         created-error (re-frame/subscribe [::subs/created-error])]
