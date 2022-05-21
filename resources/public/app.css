@@ -17,9 +17,8 @@ body {
     padding: 8px;
 }
 
-.todos-table tr:nth-child(even){background-color: #f2f2f2;}
+.todos-table {background-color: #f2f2f2; border: 2px solid;}
 
-.todos-table tr:hover {background-color: #ddd;}
 
 .todos-table th {
     padding-top: 12px;
@@ -77,4 +76,8 @@ body {
     text-align: center;
     margin-top: 20px;
     font-size: large;
+}
+
+.completed{
+    background: #FF7A05;
 }
