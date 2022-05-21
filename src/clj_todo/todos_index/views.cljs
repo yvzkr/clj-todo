@@ -115,9 +115,7 @@
 
 
 (defn todos-index []
-  [:div
-   [:h1
-    (str "This is the Todo Page.")]
+  [:div   
    [:div
     [todos-main-component]]])
 
