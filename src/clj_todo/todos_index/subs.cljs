@@ -40,3 +40,9 @@
     ::request-delete-todo-error
     (fn [db]
         (:request-delete-todo-error db)))
+
+
+(re-frame/reg-sub
+    ::error-request-todos
+    (fn [db]
+        (:error-request-todos db)))

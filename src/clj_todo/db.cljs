@@ -1,7 +1,7 @@
 (ns clj-todo.db)
 
 (def default-db
-  {:name "re-frame"
+  {:name "CljTodo"
    :todos []
    :api-url "http://localhost:3000/todos"
   }

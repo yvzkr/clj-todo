@@ -1,87 +1,142 @@
 body {
-    font-family: "Open Sans", sans-serif;
-    background-color: #e4e4e4;
-    width: 100vw;
-    height: 100vh;   
-    overflow: hidden;
+
+    font-family: "Nunito",sans-serif;
+    font-size: 16px;
+    line-height: 28px;
+    font-weight: 400;
+    height: 100%;
+    vertical-align: baseline;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+   
+    background: lighblue;
+    /*background: #020631;
+    font: 14px 'Nunito', sans-serif;*/
 }
 
 .page-content{
     padding: 25px 0 0;
 }
 
-.todos-table {
-    font-family: Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
+
+/* menu */
+.menu-wrapper, .menu a{
+    background-color: Tomato;
     width: 100%;
+    color: #fff;
 }
 
-.todos-table td, .todos-table th {
-    border: 1px solid #ddd;
-    padding: 8px;
+.menu::after{
+    content: '';
+    clear: both;
+    display: block;
 }
 
-.todos-table {background-color: #f2f2f2; border: 2px solid;}
-
-
-.todos-table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #047a4f;
-    color: white;
-}
-
-.todos-table-set-th{
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #047a4f;
-    color: white;
-    width: 100px;
-
-}
-
-.todos-container {
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-
-.todos-table-container {
-    width: 60%;
-    height: 100%;
-    position: relative;
-}
-
-
-.refresh-btn {   
-    top: 0;
-    right: 0;
+.menu a{
+    display: block;
     padding: 10px;
-    background-color: #008CBA;
-    color: white;
-    border: none;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 14px;
     cursor: pointer;
 }
 
-.create-todo-form{
-    top: 0;
-    right: 0;
-    width: 40%;
-    height: 100%;
-    margin-top: 20px;
-    background-color: #f2f2f2;
-    padding: 10px;
+.menu li{
+    position: relative;
+    display: inline-block;
 }
 
-.page-title{
+.menu > li{
+    float: none;
+}
+
+.menu, .menu ul{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
     text-align: center;
+}
+
+.menu ul li+li{
+    border-top: 1px solid #fff;
+}
+
+.menu ul{
+    position: absolute;
+    box-shadow:  5px 5px 10px 0 rgba(0,0,0, 0.5);
+}
+
+.menu > li ul, .menu ul ul{
+    opacity: 0;
+    -webkit-transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in;
+    z-index: -1;
+    visibility: hidden;
+}
+
+.menu > li ul{
+    top: 130%;
+    left: 0;
+}
+
+.menu ul ul{
+    left: 130%;
+    top: 0;
+}
+
+.menu ul a{
+    width: 250px;
+}
+
+.menu > li:hover > ul{
+    top: 100%;
+    opacity: 1;
+    z-index: 1;
+    visibility: visible;
+}
+
+.menu ul > li:hover > ul{
+    left: 100%;
+    opacity: 1;
+    z-index: 1;
+    visibility: visible;
+}
+
+
+.menu-gold, .menu-gold a{
+    background-color: gold;
+    color: #000;
+}
+.menu-gold a:hover{
+    background-color: #e6c300;
+    color: #000;
+}
+
+h1{
+    text-align: center;
+    font-family: arial;
     margin-top: 20px;
-    font-size: large;
 }
 
 .completed{
-    background: #FF7A05;
+    background: #FF7A05 !important;
+}
+
+a {
+    cursor: pointer;
+}
+
+.todo-add-form-element-div{
+    margin-top: 10px;
+}
+
+.table-header {
+    background: #192287;
+    color: #fff;
+    padding: 10px;
+    font-weight: bold;
 }

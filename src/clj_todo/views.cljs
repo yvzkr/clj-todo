@@ -10,22 +10,22 @@
 
 
 
-;; home
+;; home [display-update-name-button]
 
 (defn home-panel []
   (let [name (re-frame/subscribe [::subs/name])]
-    [:div
+    [:div {:class "container"}
      [:h1
       (str "Hello from " @name ". This is the Home Page.")]
      [:div
-      [display-update-name-button]]]))
+      ]]))
 
 (defmethod routes/panels :home-panel [] [home-panel])
 
 ;; about
 
 (defn about-panel []
-  [:div
+  [:div {:class "container"}
    [:h1 "This is the About Page."]
    [:div
     [:a {:on-click #(re-frame/dispatch [::events/navigate :home])}
@@ -36,14 +36,16 @@
 ;; header
 
 (def header-links
-  [:div#header-links {:class "header-menu"}
-   "[ "
-   [:a {:on-click #(re-frame/dispatch [::events/navigate [:home]])}
-    "Home"]
-   " | "
-   [:a {:on-click #(re-frame/dispatch [::events/navigate [:todos-index]])}
-    "Todos"]
-   " ]"])
+  [:div#header-links {:class "menu-wrapper menu-gold"}
+   [:h1 "Clojure Todo App"]
+   [:ul {:class "menu"}
+    [:li
+     [:a {:on-click #(re-frame/dispatch [::events/navigate [:home]])}
+      [:i {:class "fas fa-home"}] " Home"]]
+    [:li
+     [:a {:on-click #(re-frame/dispatch [::events/navigate [:todos-index]])}
+      [:i {:class "fas fa-tasks"}] " Todos"]]
+    ]])
 
 
 ;; main
