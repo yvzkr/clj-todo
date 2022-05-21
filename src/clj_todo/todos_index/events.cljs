@@ -119,11 +119,30 @@
                             :timeout         5000
                             :format          (ajax/json-request-format)
                             :response-format (ajax/json-response-format {:keywords? true})
-                            :on-success      [::fetch-todos ]
+                            :on-success      [::success-request-delete-todo val]
                             :on-failure      [::failure-request-delete-todo]}}
         )
     )
 )
+
+(re-frame/reg-event-db
+    ::success-request-delete-todo
+    (fn [db [_ todo_id]]
+        (let [todos (get db :todos [])
+              ;; todo_id (:id todo)
+                update-todos (remove (fn [todo] (= (:id todo) todo_id)) todos)
+                ] 
+            (-> db
+                (assoc :todos update-todos)
+                (assoc :loading false)
+                (dissoc :form )
+            )
+        )
+    )
+)
+
+
+
 
 (re-frame/reg-event-db
     ::failure-request-delete-todo

@@ -93,7 +93,7 @@
     (reagent/create-class
      {:component-did-mount
       (fn []
-        (re-frame/dispatch [::events/fetch-todos])
+        ;;(re-frame/dispatch [::events/fetch-todos])
         (println "I am alive.."))
 
        ;; ... other methods go here
@@ -115,9 +115,7 @@
 
 
 (defn todos-index []
-  [:div
-   [:h1
-    (str "This is the Todo Page.")]
+  [:div   
    [:div
     [todos-main-component]]])
 
