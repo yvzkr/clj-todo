@@ -3,9 +3,7 @@
      [re-frame.core :as re-frame]
      [clj-todo.db :as db]
      [day8.re-frame.http-fx]
-     [ajax.core :as ajax]
-     [day8.re-frame.tracing :refer-macros [fn-traced]]
-     ))
+     [ajax.core :as ajax]))
 
 
 (re-frame/reg-event-fx
@@ -17,9 +15,16 @@
                     :timeout         8000
                     :response-format (ajax/json-response-format {:keywords? true})
                     :on-success      [::fetch-todos-success]
-                    :on-failure      [:bad-http-result]}})
+                    :on-failure      [::failure-request-fetch-todos]}})
         ))
 
+(re-frame/reg-event-db
+ ::failure-request-fetch-todos
+ (fn [db [_ result]]
+   (let []
+     (-> db
+         (assoc :loading false)
+         (assoc :error-request-todos true)))))
 
 
 (re-frame/reg-event-db
@@ -85,11 +90,10 @@
     ::request-create-todo
     (fn [{:keys [db]} _]
         (let [form_data (:form db)
-              api-url (:api-url db)
-              updated-form form_data ]
+              api-url (:api-url db)]
              {:http-xhrio {:method          :post
                            :uri             api-url
-                           :params          updated-form
+                           :params          {:title (:title form_data) :status false}
                            :timeout         5000
                            :format          (ajax/json-request-format)
                            :response-format (ajax/json-response-format {:keywords? true})
@@ -105,27 +109,30 @@
     ::clear-create-todo-error
     (fn [db]
       (assoc db :created-error false)))
+
+(re-frame/reg-event-db
+    ::clear-request-todos-error
+    (fn [db]
+      (assoc db :error-request-todos false)))
   
 
 
 
 (re-frame/reg-event-fx
-    ::request-delete-todo
-    (fn [_world [_ val] ]
-        (let [
-                get-url (str "https://my-json-server.typicode.com/yvzkr/todo-json/todos/" val "/" )
-            ]
-            {:http-xhrio {:method            :delete
-                            :uri             get-url
-                            :params          {}
-                            :timeout         5000
-                            :format          (ajax/json-request-format)
-                            :response-format (ajax/json-response-format {:keywords? true})
-                            :on-success      [::success-request-delete-todo val]
-                            :on-failure      [::failure-request-delete-todo]}}
-        )
-    )
-)
+ ::request-delete-todo
+ (fn [{:keys [db]} [_ val]]
+   (let [api-url (:api-url db)
+         get-url (str api-url "/" val "/")]
+     {:http-xhrio {:method            :delete
+                   :uri             get-url
+                   :params          {}
+                   :timeout         5000
+                   :format          (ajax/json-request-format)
+                   :response-format (ajax/json-response-format {:keywords? true})
+                   :on-success      [::fetch-todos ] ;;success-request-delete-todo val
+                   :on-failure      [::failure-request-delete-todo]}})))
+
+
 
 (re-frame/reg-event-db
     ::success-request-delete-todo
@@ -192,11 +199,8 @@
 (re-frame/reg-event-fx
  ::request-todo-done
  (fn [{:keys [db]} [_ val status]]
-   (let [
-         ;todo (first (filter (fn [todo] (= (:id todo) val)) (:todos db)))
-         
-         ;updated-todo (update-where todo (fn [todo] (= (:status todo) true)) (fn [todo] (assoc todo :status true)))
-         get-url (str "https://my-json-server.typicode.com/yvzkr/todo-json/todos/" val "/")]
+   (let [api-url (:api-url db)
+         get-url (str api-url "/" val "/")]
      {:http-xhrio {:method            :patch
                    :uri             get-url
                    :params          { :status status :id val }

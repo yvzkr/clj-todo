@@ -1,32 +1,24 @@
 {
   "todos": [
     {
-      "id": 1,
-      "title": "Pay bill",
-      "status": false
+      "title": "Pay Bills",
+      "status": false,
+      "id": 1
     },
     {
-      "id": 2,
-      "title": "Play Soccerss",
-      "status": false
+      "title": "Clean Cars",
+      "status": true,
+      "id": 2
     },
     {
-      "id": 3,
-      "title": "Cook",
-      "status": true
+      "title": "Go to gym",
+      "status": true,
+      "id": 4
     },
     {
-      "id": 4,
-      "title": "Buy umberalla",
-      "status": true
-    },
-    {
-      "title": "aasa",
+      "title": "Watch Got",
+      "status": true,
       "id": 5
-    },
-    {
-      "title": "School",
-      "id": 6
     }
   ]
 }
