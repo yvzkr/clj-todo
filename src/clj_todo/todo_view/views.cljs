@@ -51,10 +51,6 @@
         [:div {:class "notification is-success"}
          [:h1 (str "Success Update Todo")]
          [:button {:class "delete" :on-click #(re-frame/dispatch [::events/clear-update-todo-success])}]])]
-     
-     [:div {:class "todo-edit-body"}
-      [text-input :title "Title"]
-      [textarea-input :remark "Remark"]]
 
      [:div {:class "todo-edit-footer"}
       [:button.button.is-danger
