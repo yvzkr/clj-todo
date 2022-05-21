@@ -93,7 +93,7 @@
     (reagent/create-class
      {:component-did-mount
       (fn []
-        (re-frame/dispatch [::events/fetch-todos])
+        ;;(re-frame/dispatch [::events/fetch-todos])
         (println "I am alive.."))
 
        ;; ... other methods go here
