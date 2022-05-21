@@ -51,26 +51,15 @@
     v))
 
 (re-frame/reg-event-db
-    ::success-request-update-todo
-    (fn [db [_ new_todo]]
-        (let [todos (get db :todos [])
-              ;; find todo in todos by new_todo id
-              ;;todo (find todos (fn [todo] (= (:id todo) (:id new_todo))))
-                ;;updated-todos (replace todos todo new_todo)
-              ;; assign new_todo to todo
-              ;;updated-todos (assoc-in todos todo new_todo )
-              ;;(update-where users #(= "Mary" (:name %)) assoc :age 8)
-              update-todo (update-where todos (fn [todo] (= (:id todo) (:id new_todo))) (fn [todo] new_todo))
-               ;;updated-todos todos ;; find and update item
-              ]
-            (-> db
-                (assoc :todos update-todo)
-                (assoc :request-update-success true)
+ ::success-request-update-todo
+ (fn [db [_ new_todo]]
+   (let [todos (get db :todos [])
+         update-todo (update-where todos (fn [todo] (= (:id todo) (:id new_todo))) (fn [todo] new_todo))]
+     (-> db
+         (assoc :todos update-todo)
+         (assoc :request-update-success true)
                 ;(dissoc :edit-form)
-                )
-        )
-    )
-)
+         ))))
 
 
 (re-frame/reg-event-db

@@ -160,3 +160,47 @@
     ::clear-request-delete-todo-error
     (fn [db]
       (assoc db :request-delete-todo-error false)))
+
+(defn indexes-where
+  [pred? coll]
+  (keep-indexed #(when (pred? %2) %1) coll))
+
+(defn update-where
+  [v pred? f & args]
+  (if-let [i (first (indexes-where pred? v))]
+    (assoc v i (apply f (v i) args))
+    v))
+
+
+
+(re-frame/reg-event-db
+ ::success-request-todo-done
+ (fn [db [_ result]]
+   (let [todos (get db :todos [])
+         update-todos (update-where todos (fn [todo] (= (:id todo) (:id result))) (fn [todo] result))]
+     (println result)
+     (-> db
+         (assoc :todos update-todos)
+         (assoc :request-update-success true)
+         ))))
+
+
+
+
+(re-frame/reg-event-fx
+ ::request-todo-done
+ (fn [{:keys [db]} [_ val status]]
+   (let [
+         ;todo (first (filter (fn [todo] (= (:id todo) val)) (:todos db)))
+         
+         ;updated-todo (update-where todo (fn [todo] (= (:status todo) true)) (fn [todo] (assoc todo :status true)))
+         get-url (str "https://my-json-server.typicode.com/yvzkr/todo-json/todos/" val "/")]
+     {:http-xhrio {:method            :patch
+                   :uri             get-url
+                   :params          { :status status :id val }
+                   :timeout         5000
+                   :format          (ajax/json-request-format)
+                   :response-format (ajax/json-response-format {:keywords? true})
+                   :on-success      [::success-request-todo-done]
+                   :on-failure      [::failure-request-delete-todo]}})))
+

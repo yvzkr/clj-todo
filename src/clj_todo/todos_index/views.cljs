@@ -9,16 +9,19 @@
 
 
 
-(defn display-todo [{:keys [id title remark]}]
-  [:tr {:key id}
+(defn display-todo [{:keys [id title status]}]
+  [:tr {:key id :class (if status "completed" " ")}
    [:td  title]
-   [:td  remark]
+   [:td  (if status "done" "not done")]
    [:td
     [:a {:on-click #(re-frame/dispatch [::route-events/navigate [:todo-view :id id]])}
      "Edit"]
     " | "
     [:a {:on-click #(re-frame/dispatch [::events/request-delete-todo id])}
-     "Delete"]]])
+     "Delete"]
+    " | "
+    [:a {:on-click #(re-frame/dispatch [::events/request-todo-done id (not status)])}
+     (if status "Done" "Not Done")]]])
 
 (defn fetch-todos-button []
   [:button {:on-click #(re-frame/dispatch [::events/fetch-todos]) :class "refresh-btn"} "Refresh"])
@@ -52,7 +55,6 @@
      [:h1 {:class "page-title"} (str "Create New Todo")]
 
      [text-input :title "Title"]
-     [textarea-input :remark "Remark"]
      (when @created-error
        [:div {:class "notification is-danger"}
         [:h1 (str "Error create Todo")]
@@ -62,12 +64,6 @@
       {:disabled (not is-valid?)
        :on-click #(re-frame/dispatch [::events/request-create-todo])}
       "Save"]]))
-
-
-
-
-
-
 
 ;;main todo-index
 (defn todo-list []
@@ -84,7 +80,7 @@
          [:button {:class "delete" :on-click #(re-frame/dispatch [::events/clear-request-delete-todo-error])} "Done"]])
       [:table {:class "todos-table"}
        [:thead
-        [:tr [:th "Title"] [:th "Description"] [:th {:class "todos-table-set-th"} [fetch-todos-button]]]]
+        [:tr [:th "Title"] [:th "Status"] [:th {:class "todos-table-set-th"} [fetch-todos-button]]]]
        [:tbody
         (map display-todo @todos)]]]]))
 
@@ -93,12 +89,11 @@
     (reagent/create-class
      {:component-did-mount
       (fn []
-        ;;(re-frame/dispatch [::events/fetch-todos])
+        (re-frame/dispatch [::events/fetch-todos])
         (println "I am alive.."))
 
        ;; ... other methods go here
        ;; println state
-
 
        ;; name your component for inclusion in error messages
       :display-name "todos-main-component"
