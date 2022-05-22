@@ -162,7 +162,7 @@
 
 
 (re-frame/reg-event-db
-    ::clear-request-delete-todo-error
+    ::clear-error-request-delete-todo
     (fn [db]
       (dissoc db :error-request-delete-todo)))
 
