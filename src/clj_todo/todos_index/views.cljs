@@ -26,12 +26,12 @@
     [:a {:on-click #(re-frame/dispatch [::events/request-delete-todo id])}
      [:i {:class "fas fa-trash"}]]
     " | "
-    [:a {:on-click #(re-frame/dispatch [::events/request-todo-done id (not status)])}
+    [:a {:on-click #(re-frame/dispatch [::events/request-change-todo-status id (not status)])}
      [checkbox " " status]  ]]])
 
-(defn fetch-todos-button []
+(defn request-todos-button []
   [:button {:class "btn btn-success"
-            :on-click #(re-frame/dispatch [::events/fetch-todos])}
+            :on-click #(re-frame/dispatch [::events/request-todos])}
    [:i {:class "fas fa-retweet"}]])
 
 (defn text-input [id label]
@@ -43,12 +43,39 @@
                    :placeholder label}]))
 
 
-(defn request-created-error []
-  (let [error (re-frame/subscribe [::subs/created-error])]
+(defn alert-error-request-create-todo-div []
+  (let [error (re-frame/subscribe [::subs/error-request-create-todo])]
     (when @error
       [:div {:class "alert alert-danger alert-dismissible "}       
-       [:span (str "Error Create Item")]
-       [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-create-todo-error])} "x"]])))
+       [:span (str "Request Error Create Todo")]
+       [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-error-request-create-todo])} "x"]])))
+
+(defn alert-error-request-delete-todo-div []
+  (let [error (re-frame/subscribe [::subs/error-request-delete-todo])]
+    (when @error
+      [:div {:class "alert alert-danger alert-dismissible "}
+       [:span (str "Error Request Delete Todo")]
+       [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-error-request-delete-todo])} "x"]])))
+
+(defn alert-error-request-todos-div []
+  (let [error (re-frame/subscribe [::subs/error-request-todos])]
+    (when @error
+      [:div {:class "alert alert-danger alert-dismissible "}       
+       [:span (str "Error Request Todo List. Please Check Api Url")]
+       [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-error-request-todos])} "x"]])))
+
+
+(defn alert-error-request-change-todo-status-div []
+  (let [error (re-frame/subscribe [::subs/error-request-change-todo-status])]
+    (when @error
+      [:div {:class "alert alert-danger alert-dismissible "}
+       [:span (str "Error Request Change Todo Status.")]
+       [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-error-request-change-todo-status])} "x"]])))
+
+
+
+
+
 
 
 (defn new-todo-form []
@@ -64,27 +91,8 @@
         :class "form-control btn btn-success todo-create-btn"
         :on-click #(re-frame/dispatch [::events/request-create-todo])}
        "Add"]]
-
      [:div {:class "todo-add-form-element-div"}
-      [request-created-error]]]))
-
-
-(defn error-request-delete-alert []
-  (let [request-delete-todo-error (re-frame/subscribe [::subs/request-delete-todo-error])]
-    (when @request-delete-todo-error
-      [:div {:class "alert alert-danger alert-dismissible "}
-       [:span (str "Error Delete Item")]
-       [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-request-delete-todo-error])} "x"]])))
-
-
-(defn error-request-todos-alert []
-  (let [error (re-frame/subscribe [::subs/error-request-todos])]
-    (when @error
-      [:div {:class "alert alert-danger alert-dismissible "}       
-       [:span (str "Error Request Todo List. Please Check Api Url")]
-       [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-request-todos-error])} "x"]])))
-
-
+      [alert-error-request-create-todo-div]]]))
 
 ;;main todo-index
 (defn todo-list []
@@ -93,14 +101,15 @@
     [:div {:class ""}
      [:div
       [:h1 {:class "page-title"} (str "Todo List")]
-      [error-request-delete-alert]
-      [error-request-todos-alert]
+      [alert-error-request-delete-todo-div]
+      [alert-error-request-change-todo-status-div]
+      [alert-error-request-todos-div]
       [:table {:class "table table-striped table-hover todo-table"}
        [:thead {:class "thead-dark table-header"}
         [:tr  {:scope "col"}
          [:th {:class "table-th-text"} "Title"]
          [:th {:class "table-th-status"} "Status"]
-         [:th {:class "table-th-settings"} [fetch-todos-button]]]]
+         [:th {:class "table-th-settings"} [request-todos-button]]]]
        [:tbody
         (map display-todo @todos)]]
       (when @loading "Loading...")]]))
@@ -111,7 +120,7 @@
     (reagent/create-class
      {:component-did-mount
       (fn []
-        (re-frame/dispatch [::events/fetch-todos])
+        (re-frame/dispatch [::events/request-todos])
         (re-frame/dispatch [::events/clear-all-alert-message])
         (println "I am alive.. ❤️ ❤️ ❤️ ❤️ ❤️ "))
 

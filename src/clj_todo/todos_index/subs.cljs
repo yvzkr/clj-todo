@@ -31,18 +31,24 @@
 )
 
 (re-frame/reg-sub
-    ::created-error
+    ::error-request-create-todo
     (fn [db]
-        (:created-error db)))
+        (:error-request-create-todo db)))
 
 
 (re-frame/reg-sub
-    ::request-delete-todo-error
+    ::error-request-delete-todo
     (fn [db]
-        (:request-delete-todo-error db)))
+        (:error-request-delete-todo db)))
 
 
 (re-frame/reg-sub
     ::error-request-todos
     (fn [db]
         (:error-request-todos db)))
+
+
+(re-frame/reg-sub
+    ::error-request-change-todo-status
+    (fn [db]
+        (:error-request-change-todo-status db)))
