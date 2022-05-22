@@ -43,7 +43,7 @@
                    :placeholder label}]))
 
 
-(defn noti-request-create-todo-error []
+(defn alert-request-create-todo-error []
   (let [error (re-frame/subscribe [::subs/error-request-create-todo])]
     (when @error
       [:div {:class "alert alert-danger alert-dismissible "}       
@@ -66,7 +66,7 @@
        "Add"]]
 
      [:div {:class "todo-add-form-element-div"}
-      [noti-request-create-todo-error]]]))
+      [alert-request-create-todo-error]]]))
 
 
 (defn error-request-delete-alert []
