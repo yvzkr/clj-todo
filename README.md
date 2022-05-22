@@ -22,7 +22,7 @@ $ npm install
 $ npm run watch 
 ```
 
-And use json-server to mock the data:
+And use json-server for data:
 
 ```
 $ json-server --watch db.json
