@@ -43,12 +43,12 @@
                    :placeholder label}]))
 
 
-(defn alert-request-create-todo-error []
+(defn alert-error-request-create-todo-div []
   (let [error (re-frame/subscribe [::subs/error-request-create-todo])]
     (when @error
       [:div {:class "alert alert-danger alert-dismissible "}       
        [:span (str "Request Error Create Todo")]
-       [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-create-todo-error])} "x"]])))
+       [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-error-request-create-todo])} "x"]])))
 
 
 (defn new-todo-form []
@@ -66,12 +66,12 @@
        "Add"]]
 
      [:div {:class "todo-add-form-element-div"}
-      [alert-request-create-todo-error]]]))
+      [alert-error-request-create-todo-div]]]))
 
 
-(defn error-request-delete-alert []
-  (let [request-delete-todo-error (re-frame/subscribe [::subs/request-delete-todo-error])]
-    (when @request-delete-todo-error
+(defn alert-request-delete-todo-error []
+  (let [error (re-frame/subscribe [::subs/error-request-delete-todo])]
+    (when @error
       [:div {:class "alert alert-danger alert-dismissible "}
        [:span (str "Error Delete Item")]
        [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-request-delete-todo-error])} "x"]])))
@@ -93,7 +93,7 @@
     [:div {:class ""}
      [:div
       [:h1 {:class "page-title"} (str "Todo List")]
-      [error-request-delete-alert]
+      [alert-request-delete-todo-error]
       [error-request-todos-alert]
       [:table {:class "table table-striped table-hover todo-table"}
        [:thead {:class "thead-dark table-header"}

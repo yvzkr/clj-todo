@@ -37,9 +37,9 @@
 
 
 (re-frame/reg-sub
-    ::request-delete-todo-error
+    ::error-request-delete-todo
     (fn [db]
-        (:request-delete-todo-error db)))
+        (:error-request-delete-todo db)))
 
 
 (re-frame/reg-sub

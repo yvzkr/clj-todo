@@ -102,9 +102,9 @@
 
 
 (re-frame/reg-event-db
-    ::clear-create-todo-error
-    (fn [db]
-      (assoc db :error-request-create-todo false)))
+ ::clear-error-request-create-todo
+ (fn [db]
+   (assoc db :error-request-create-todo false)))
 
 (re-frame/reg-event-db
     ::clear-request-todos-error
@@ -154,7 +154,7 @@
     (fn [db [_ result]]
         (let [ ]
             (-> db
-                (assoc :request-delete-todo-error true)
+                (assoc :error-request-delete-todo true)
             )
         )
     )
@@ -164,7 +164,7 @@
 (re-frame/reg-event-db
     ::clear-request-delete-todo-error
     (fn [db]
-      (assoc db :request-delete-todo-error false)))
+      (dissoc db :error-request-delete-todo)))
 
 (defn indexes-where
   [pred? coll]
@@ -213,6 +213,6 @@
   (fn [db]
     (-> db
        (dissoc :error-request-todos )
-       (dissoc :request-delete-todo-error )
+       (dissoc :error-request-delete-todo)
        (dissoc :error-request-create-todo )        
         )))
