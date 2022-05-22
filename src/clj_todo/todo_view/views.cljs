@@ -11,59 +11,57 @@
 
 (defn text-input [id label]
   (let [value (re-frame/subscribe [::subs/form id])]
-    [:div.field
-     [:label.label label]
-     [:div.control
       [:input.input {:value @value
                      :on-change #(re-frame/dispatch [::events/update-form id (-> % .-target .-value)])
                      :type "text"
-                     :placeholder "Text input"}]]]))
-    
-    
-(defn textarea-input [id label]
-  (let [value (re-frame/subscribe [::subs/form id])]
-    [:div.field
-     [:label.label label]
-     [:div.control
-      [:textarea {:value @value
-                  :on-change #(re-frame/dispatch [::events/update-form id (-> % .-target .-value)])
-                  :class "textarea"
-                  :placeholder "Text Input"}]]]))
+                     :class "form-control"
+                     :placeholder label}]))
+
+
+(defn request-update-error-noti []
+  (let [error (re-frame/subscribe [::subs/updated-error])]
+    (when @error
+      [:div {:class "alert alert-danger alert-dismissible "}       
+       [:span (str "Error Update Item")]
+       [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-update-todo-error])} "x"]])))
+
+
+(defn request-update-success-noti []
+  (let [error (re-frame/subscribe [::subs/request-update-success])]
+    (when @error
+      [:div {:class "alert alert-success alert-dismissible "}       
+       [:span (str "Updated Item")]
+       [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-update-todo-success])} "x"]])))
+
+
 
 
 (defn edit-todo-form []
-  (let [is-valid? @(re-frame/subscribe [::subs/form-is-valid? [:title]])
-        request-update-error (re-frame/subscribe [::subs/updated-error])
-        request-update-success (re-frame/subscribe [::subs/request-update-success])
-        ]
-    [:div {:class "create-todo-form"}
-     [:div {:class "todo-edit-header"}
-      [:h1 {:class "page-title"} (str "Edit Todo")]]
+  (let [is-valid? @(re-frame/subscribe [::subs/form-is-valid? [:title]])]
+    [:div {:class "form-group "}
+     [:h1 {:class "page-title"} (str "Edit Todo")]
 
-     [:div {:class "error-div"}
-      (when @request-update-error
-        [:div {:class "notification is-danger"}
-         [:h1 (str "Error Update Todo")]
-         [:button {:class "delete" :on-click #(re-frame/dispatch [::events/clear-update-todo-error])}]])]
+     [request-update-error-noti]
 
-     [:div {:class "success-div"}
-      (when @request-update-success
-        [:div {:class "notification is-success"}
-         [:h1 (str "Success Update Todo")]
-         [:button {:class "delete" :on-click #(re-frame/dispatch [::events/clear-update-todo-success])}]])]
-     
-     [:div {:class "todo-edit-body"}
+     [request-update-success-noti]
+
+     [:div {:class "todo-add-form-element-div"}
       [text-input :title "Title"]]
 
-     [:div {:class "todo-edit-footer"}
+     [:div {:class "todo-add-form-element-div"}
       [:button.button.is-danger
        {:disabled (not is-valid?)
+        :class "form-control btn btn-danger"
         :on-click (fn []
                     (re-frame/dispatch [::events/close-edit-form])
                     (re-frame/dispatch [::route-events/navigate [:todos-index]]))}
-       "Back"]
+       "Back"]]
+
+
+     [:div {:class "todo-add-form-element-div"}
       [:button.button.is-primary
        {:disabled (not is-valid?)
+        :class "form-control btn btn-success"
         :on-click #(re-frame/dispatch [::events/request-update-todo])}
        "Update"]]]))
 
@@ -87,15 +85,16 @@
        ;; note the keyword for this method
       :reagent-render
       (fn []
-        [:div
-         [edit-todo-form]])})))
+        [:div {:class "row"}
+        [:div {:class "col-md-8 col-md-offset-2 col-xs-10"}
+         [edit-todo-form]]])})))
 
     
 
 (defn todo-view []
   (let [route-params @(re-frame/subscribe [::route-subs/route-params])
         todo @(re-frame/subscribe [::subs/todo (:id route-params)])]
-    [:div {:class "edit-container"}
+    [:div {:class "container"}
      
      [todo-view-component todo]]))
 

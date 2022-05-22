@@ -6,8 +6,8 @@
             [clj-todo.todos-index.events :as events]
             [reagent.core :as reagent]))
 ;
-;[:a {:on-click #(re-frame/dispatch [::route-events/navigate [:todo-view :id id]])}
-;     "Edit"]
+;[:a {:on-click #(re-frame/dispatch [::route-events/navigate [:todo-view :id id]])} "Edit"]
+;     
 ;   " | "
 
 (defn checkbox [name checked?]
