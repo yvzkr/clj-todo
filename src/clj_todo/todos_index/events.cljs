@@ -7,19 +7,19 @@
 
 
 (re-frame/reg-event-fx
-    ::fetch-todos
+    ::request-todos
     (fn [{:keys [db]} _]
       (let [api-url (:api-url db)]{:db (assoc db :loading true)
         :http-xhrio {:method          :get
                     :uri             api-url
                     :timeout         8000
                     :response-format (ajax/json-response-format {:keywords? true})
-                    :on-success      [::fetch-todos-success]
-                    :on-failure      [::failure-request-fetch-todos]}})
+                    :on-success      [::request-todos-success]
+                    :on-failure      [::failure-request-request-todos]}})
         ))
 
 (re-frame/reg-event-db
- ::failure-request-fetch-todos
+ ::failure-request-request-todos
  (fn [db [_ result]]
    (let []
      (-> db
@@ -28,7 +28,7 @@
 
 
 (re-frame/reg-event-db
- ::fetch-todos-success
+ ::request-todos-success
  (fn [db [_ data]]
    (-> db
        (assoc :loading false)
@@ -113,7 +113,7 @@
                    :timeout         5000
                    :format          (ajax/json-request-format)
                    :response-format (ajax/json-response-format {:keywords? true})
-                   :on-success      [::fetch-todos] ;;success-request-delete-todo val
+                   :on-success      [::request-todos] ;;success-request-delete-todo val
                    :on-failure      [::failure-request-delete-todo]}})))
 
 

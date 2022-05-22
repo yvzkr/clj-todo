@@ -29,9 +29,9 @@
     [:a {:on-click #(re-frame/dispatch [::events/request-change-todo-status id (not status)])}
      [checkbox " " status]  ]]])
 
-(defn fetch-todos-button []
+(defn request-todos-button []
   [:button {:class "btn btn-success"
-            :on-click #(re-frame/dispatch [::events/fetch-todos])}
+            :on-click #(re-frame/dispatch [::events/request-todos])}
    [:i {:class "fas fa-retweet"}]])
 
 (defn text-input [id label]
@@ -109,7 +109,7 @@
         [:tr  {:scope "col"}
          [:th {:class "table-th-text"} "Title"]
          [:th {:class "table-th-status"} "Status"]
-         [:th {:class "table-th-settings"} [fetch-todos-button]]]]
+         [:th {:class "table-th-settings"} [request-todos-button]]]]
        [:tbody
         (map display-todo @todos)]]
       (when @loading "Loading...")]]))
@@ -120,7 +120,7 @@
     (reagent/create-class
      {:component-did-mount
       (fn []
-        (re-frame/dispatch [::events/fetch-todos])
+        (re-frame/dispatch [::events/request-todos])
         (re-frame/dispatch [::events/clear-all-alert-message])
         (println "I am alive.. ❤️ ❤️ ❤️ ❤️ ❤️ "))
 
