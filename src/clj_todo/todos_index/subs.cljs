@@ -46,3 +46,9 @@
     ::error-request-todos
     (fn [db]
         (:error-request-todos db)))
+
+
+(re-frame/reg-sub
+    ::error-request-change-todo-status
+    (fn [db]
+        (:error-request-change-todo-status db)))

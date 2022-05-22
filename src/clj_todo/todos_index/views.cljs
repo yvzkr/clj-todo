@@ -26,7 +26,7 @@
     [:a {:on-click #(re-frame/dispatch [::events/request-delete-todo id])}
      [:i {:class "fas fa-trash"}]]
     " | "
-    [:a {:on-click #(re-frame/dispatch [::events/request-todo-done id (not status)])}
+    [:a {:on-click #(re-frame/dispatch [::events/request-change-todo-status id (not status)])}
      [checkbox " " status]  ]]])
 
 (defn fetch-todos-button []
@@ -65,6 +65,14 @@
        [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-error-request-todos])} "x"]])))
 
 
+(defn alert-error-request-change-todo-status-div []
+  (let [error (re-frame/subscribe [::subs/error-request-change-todo-status])]
+    (when @error
+      [:div {:class "alert alert-danger alert-dismissible "}
+       [:span (str "Error Request Change Todo Status.")]
+       [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-error-request-change-todo-status])} "x"]])))
+
+
 
 
 
@@ -94,6 +102,7 @@
      [:div
       [:h1 {:class "page-title"} (str "Todo List")]
       [alert-error-request-delete-todo-div]
+      [alert-error-request-change-todo-status-div]
       [alert-error-request-todos-div]
       [:table {:class "table table-striped table-hover todo-table"}
        [:thead {:class "thead-dark table-header"}
