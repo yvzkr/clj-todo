@@ -104,12 +104,12 @@
 (re-frame/reg-event-db
  ::clear-error-request-create-todo
  (fn [db]
-   (assoc db :error-request-create-todo false)))
+   (dissoc db :error-request-create-todo)))
 
 (re-frame/reg-event-db
-    ::clear-request-todos-error
-    (fn [db]
-      (assoc db :error-request-todos false)))
+ ::clear-error-request-todos
+ (fn [db]
+   (dissoc db :error-request-todos)))
   
 
 

@@ -57,6 +57,13 @@
        [:span (str "Error Request Delete Todo")]
        [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-error-request-delete-todo])} "x"]])))
 
+(defn alert-error-request-todos-div []
+  (let [error (re-frame/subscribe [::subs/error-request-todos])]
+    (when @error
+      [:div {:class "alert alert-danger alert-dismissible "}       
+       [:span (str "Error Request Todo List. Please Check Api Url")]
+       [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-error-request-todos])} "x"]])))
+
 
 
 
@@ -76,20 +83,8 @@
         :class "form-control btn btn-success todo-create-btn"
         :on-click #(re-frame/dispatch [::events/request-create-todo])}
        "Add"]]
-
      [:div {:class "todo-add-form-element-div"}
       [alert-error-request-create-todo-div]]]))
-
-
-
-(defn error-request-todos-alert []
-  (let [error (re-frame/subscribe [::subs/error-request-todos])]
-    (when @error
-      [:div {:class "alert alert-danger alert-dismissible "}       
-       [:span (str "Error Request Todo List. Please Check Api Url")]
-       [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-request-todos-error])} "x"]])))
-
-
 
 ;;main todo-index
 (defn todo-list []
@@ -99,7 +94,7 @@
      [:div
       [:h1 {:class "page-title"} (str "Todo List")]
       [alert-error-request-delete-todo-div]
-      [error-request-todos-alert]
+      [alert-error-request-todos-div]
       [:table {:class "table table-striped table-hover todo-table"}
        [:thead {:class "thead-dark table-header"}
         [:tr  {:scope "col"}
