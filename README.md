@@ -198,7 +198,11 @@ The `resources/public/js/compiled` directory is created, containing the compiled
 
 ## Mock server
 if you initial api 
-open console in project root and run json-server --watch db.json
+open console in project root and run 
+
+```sh 
+json-server --watch db.json
+```
 
 Note: If you trouble about json-server, like the following:
 
