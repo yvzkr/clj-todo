@@ -32,3 +32,28 @@
   ::update-name
   (fn [db [_ val]] ; val arg
     (assoc db :name val)))
+
+
+(re-frame/reg-event-db
+  ::update-api-url-text
+  (fn [db [_ val]] ; val arg
+    (assoc db :new-api-url val)))
+
+
+(re-frame/reg-event-db
+  ::load-new-api-url-to-api-url
+  (fn [db]
+    (-> db
+        (assoc :api-url (:new-api-url db))
+        (assoc :success-update-api-url true))))
+
+
+(re-frame/reg-event-db
+    ::load-api-url-form
+    (fn [db]
+      (assoc db :new-api-url (:api-url db))))
+
+(re-frame/reg-event-db
+    ::clear-success-update-api-url
+    (fn [db]
+        (assoc db :success-update-api-url false)))

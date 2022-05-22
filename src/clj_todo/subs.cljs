@@ -16,3 +16,21 @@
   ::route-params
   (fn [db _]
     (get-in  db [:route :route :route-params])))  
+
+
+(re-frame/reg-sub
+ ::api-url
+ (fn [db]
+   (:api-url db)))
+
+(re-frame/reg-sub
+ ::new-api-url
+ (fn [db]
+   (:new-api-url db)))
+
+
+
+(re-frame/reg-sub
+ ::success-update-api-url
+ (fn [db]
+   (:success-update-api-url db)))
