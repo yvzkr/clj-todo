@@ -31,8 +31,12 @@ $ json-server --watch db.json
 
 If you want to change the api url. It is possible to change the api url from the form on the main page.
 
+What was done in the given case.
 
-
+- [X] CRUD
+- [X] JSON-SERVER (use http-xhrio )
+- [x] Desing
+- [ ] Test
 
 ### Project Overview
 
