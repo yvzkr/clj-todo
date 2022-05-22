@@ -140,3 +140,11 @@ a {
     padding: 10px;
     font-weight: bold;
 }
+
+.table-th-status {
+    width: 150px;
+}
+
+.table-th-settings {
+    width: 100px;
+}

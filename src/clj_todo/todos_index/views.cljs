@@ -93,16 +93,18 @@
         loading (re-frame/subscribe [::subs/loading])]
     [:div {:class ""}
      [:div
-      [:h1 {:class "page-title"} (str "Todo List")]      
-      (when @loading "Loading...")
+      [:h1 {:class "page-title"} (str "Todo List")]
       [error-request-delete-alert]
       [error-request-todos-alert]
-      [:table {:class "table table-striped table-hover "}
+      [:table {:class "table table-striped table-hover todo-table"}
        [:thead {:class "thead-dark table-header"}
-        [:tr  {:scope "col" }
-         [:th "Title"] [:th "Status"] [:th  [fetch-todos-button]]]]
+        [:tr  {:scope "col"}
+         [:th {:class "table-th-text"} "Title"]
+         [:th {:class "table-th-status"} "Status"]
+         [:th {:class "table-th-settings"} [fetch-todos-button]]]]
        [:tbody
-        (map display-todo @todos)]]]]))
+        (map display-todo @todos)]]
+      (when @loading "Loading...")]]))
 
 (defn todos-main-component []
   (let [state (reagent/atom {})] ;; you can include state
