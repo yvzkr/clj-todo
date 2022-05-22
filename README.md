@@ -5,6 +5,30 @@ you.
 
 ## Getting Started
 
+# Developer notes:
+
+Before you can use clj-todo, you need to install it.
+
+```
+$ cd clj-todo
+$ lein uberjar
+
+``` 
+For run the application, you can use the following command:
+
+```
+$ npm install
+$ npm run watch 
+```
+
+And use json-server to mock the data:
+
+```
+$ json-server --watch db.json
+
+```
+
+
 ### Project Overview
 
 * Architecture:
