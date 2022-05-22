@@ -31,9 +31,9 @@
 )
 
 (re-frame/reg-sub
-    ::created-error
+    ::error-request-create-todo
     (fn [db]
-        (:created-error db)))
+        (:error-request-create-todo db)))
 
 
 (re-frame/reg-sub

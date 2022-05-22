@@ -43,11 +43,11 @@
                    :placeholder label}]))
 
 
-(defn request-created-error []
-  (let [error (re-frame/subscribe [::subs/created-error])]
+(defn noti-request-create-todo-error []
+  (let [error (re-frame/subscribe [::subs/error-request-create-todo])]
     (when @error
       [:div {:class "alert alert-danger alert-dismissible "}       
-       [:span (str "Error Create Item")]
+       [:span (str "Request Error Create Todo")]
        [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-create-todo-error])} "x"]])))
 
 
@@ -66,7 +66,7 @@
        "Add"]]
 
      [:div {:class "todo-add-form-element-div"}
-      [request-created-error]]]))
+      [noti-request-create-todo-error]]]))
 
 
 (defn error-request-delete-alert []

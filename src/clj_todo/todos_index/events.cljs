@@ -75,15 +75,11 @@
 )
 
 (re-frame/reg-event-db
-    ::failure-request-create-todo
-    (fn [db [_ result]]
-        (let [ ]
-            (-> db
-                (assoc :created-error true)
-            )
-        )
-    )
-)
+ ::failure-request-create-todo
+ (fn [db [_ result]]
+   (let []
+     (-> db
+         (assoc :error-request-create-todo true)))))
 
 
 (re-frame/reg-event-fx
@@ -108,7 +104,7 @@
 (re-frame/reg-event-db
     ::clear-create-todo-error
     (fn [db]
-      (assoc db :created-error false)))
+      (assoc db :error-request-create-todo false)))
 
 (re-frame/reg-event-db
     ::clear-request-todos-error
@@ -218,5 +214,5 @@
     (-> db
        (dissoc :error-request-todos )
        (dissoc :request-delete-todo-error )
-       (dissoc :created-error )        
+       (dissoc :error-request-create-todo )        
         )))
