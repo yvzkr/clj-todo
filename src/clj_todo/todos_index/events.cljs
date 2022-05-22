@@ -210,3 +210,13 @@
                    :on-success      [::success-request-todo-done]
                    :on-failure      [::failure-request-delete-todo]}})))
 
+
+
+(re-frame/reg-event-db
+  ::clear-all-alert-message
+  (fn [db]
+    (-> db
+       (dissoc :error-request-todos )
+       (dissoc :request-delete-todo-error )
+       (dissoc :created-error )        
+        )))

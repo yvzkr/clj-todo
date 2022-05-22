@@ -1,11 +1,6 @@
 {
   "todos": [
     {
-      "title": "Pay Bills",
-      "status": false,
-      "id": 1
-    },
-    {
       "title": "Clean Cars",
       "status": false,
       "id": 2
@@ -19,6 +14,11 @@
       "title": "Watch Got3",
       "status": true,
       "id": 5
+    },
+    {
+      "title": "Cook",
+      "status": false,
+      "id": 6
     }
   ]
 }

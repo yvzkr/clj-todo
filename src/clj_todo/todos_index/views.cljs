@@ -1,8 +1,7 @@
 (ns clj-todo.todos-index.views
   (:require [re-frame.core :as re-frame]
             [clj-todo.todos-index.subs :as subs]
-            [clj-todo.routes :as routes]
-            [clj-todo.events :as route-events]
+            [clj-todo.routes :as routes]            
             [clj-todo.todos-index.events :as events]
             [reagent.core :as reagent]))
 ;
@@ -73,7 +72,7 @@
 (defn error-request-delete-alert []
   (let [request-delete-todo-error (re-frame/subscribe [::subs/request-delete-todo-error])]
     (when @request-delete-todo-error
-      [:div {:class "alert alert-danger alert-dismissible "}       
+      [:div {:class "alert alert-danger alert-dismissible "}
        [:span (str "Error Delete Item")]
        [:button {:class "close" :on-click #(re-frame/dispatch [::events/clear-request-delete-todo-error])} "x"]])))
 
@@ -107,11 +106,13 @@
       (when @loading "Loading...")]]))
 
 (defn todos-main-component []
+  #_{:clj-kondo/ignore [:unused-binding]}
   (let [state (reagent/atom {})] ;; you can include state
     (reagent/create-class
      {:component-did-mount
       (fn []
         (re-frame/dispatch [::events/fetch-todos])
+        (re-frame/dispatch [::events/clear-all-alert-message])
         (println "I am alive.. ❤️ ❤️ ❤️ ❤️ ❤️ "))
 
        ;; ... other methods go here

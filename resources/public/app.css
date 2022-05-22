@@ -148,3 +148,11 @@ a {
 .table-th-settings {
     width: 100px;
 }
+
+.api-url-input{
+    width: 380px !important;
+}
+
+.todo-margin-top{
+    margin-top: 5px;
+}
