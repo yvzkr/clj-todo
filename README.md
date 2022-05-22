@@ -10,6 +10,7 @@ you.
 Before you can use clj-todo, you need to install it.
 
 ```
+$ git clone https://github.com/yvzkr/clj-todo
 $ cd clj-todo
 $ lein uberjar
 
