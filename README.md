@@ -229,7 +229,7 @@ The `resources/public/js/compiled` directory is created, containing the compiled
 `manifest.edn` files.
 
 
-## Mock server
+## JSON-SERVER
 if you initial api 
 open console in project root and run 
 
