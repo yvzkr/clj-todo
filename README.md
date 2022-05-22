@@ -28,6 +28,10 @@ $ json-server --watch db.json
 
 ```
 
+If you want to change the api url. It is possible to change the api url from the form on the main page.
+
+
+
 
 ### Project Overview
 
