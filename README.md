@@ -5,7 +5,7 @@ you.
 
 ## Getting Started
 
-# Developer notes:
+### Developer notes:
 
 Before you can use clj-todo, you need to install it.
 
