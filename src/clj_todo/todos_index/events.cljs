@@ -37,9 +37,9 @@
 
 ;;form event
 (re-frame/reg-event-db
-    ::update-form
-    (fn [db [_ id val]]
-        (assoc-in db [:form id ] val )))
+ ::update-form
+ (fn [db [_ id val]]
+   (assoc-in db [:form id] val)))
 
 (re-frame/reg-event-db
  ::save-todo-form
@@ -113,26 +113,21 @@
                    :timeout         5000
                    :format          (ajax/json-request-format)
                    :response-format (ajax/json-response-format {:keywords? true})
-                   :on-success      [::fetch-todos ] ;;success-request-delete-todo val
+                   :on-success      [::fetch-todos] ;;success-request-delete-todo val
                    :on-failure      [::failure-request-delete-todo]}})))
 
 
 
 (re-frame/reg-event-db
-    ::success-request-delete-todo
-    (fn [db [_ todo_id]]
-        (let [todos (get db :todos [])
+ ::success-request-delete-todo
+ (fn [db [_ todo_id]]
+   (let [todos (get db :todos [])
               ;; todo_id (:id todo)
-                update-todos (remove (fn [todo] (= (:id todo) todo_id)) todos)
-                ] 
-            (-> db
-                (assoc :todos update-todos)
-                (assoc :loading false)
-                (dissoc :form )
-            )
-        )
-    )
-)
+         update-todos (remove (fn [todo] (= (:id todo) todo_id)) todos)]
+     (-> db
+         (assoc :todos update-todos)
+         (assoc :loading false)
+         (dissoc :form)))))
 
 
 
@@ -146,14 +141,14 @@
 
 
 (re-frame/reg-event-db
-    ::clear-error-request-delete-todo
-    (fn [db]
-      (dissoc db :error-request-delete-todo)))
+ ::clear-error-request-delete-todo
+ (fn [db]
+   (dissoc db :error-request-delete-todo)))
 
 (re-frame/reg-event-db
-    ::clear-error-request-change-todo-status
-    (fn [db]
-      (dissoc db :error-request-change-todo-status)))
+ ::clear-error-request-change-todo-status
+ (fn [db]
+   (dissoc db :error-request-change-todo-status)))
 
 (defn indexes-where
   [pred? coll]
@@ -175,8 +170,7 @@
      (println result)
      (-> db
          (assoc :todos update-todos)
-         (assoc :request-update-success true)
-         ))))
+         (assoc :request-update-success true)))))
 
 (re-frame/reg-event-db
  ::failure-request-change-todo-status
@@ -193,7 +187,7 @@
          get-url (str api-url "/" val "/")]
      {:http-xhrio {:method            :patch
                    :uri             get-url
-                   :params          { :status status :id val }
+                   :params          {:status status :id val}
                    :timeout         5000
                    :format          (ajax/json-request-format)
                    :response-format (ajax/json-response-format {:keywords? true})
@@ -203,10 +197,10 @@
 
 
 (re-frame/reg-event-db
-  ::clear-all-alert-message
-  (fn [db]
-    (-> db
-       (dissoc :error-request-todos )
+ ::clear-all-alert-message
+ (fn [db]
+   (-> db
+       (dissoc :error-request-todos)
        (dissoc :error-request-delete-todo)
-       (dissoc :error-request-create-todo )        
-        )))
+       (dissoc :error-request-create-todo)
+       (dissoc :error-request-change-todo-status))))
