@@ -63,12 +63,11 @@
 
 
 (re-frame/reg-event-db
-    ::failure-request-update-todo
-    (fn [db [_ result]]
-      (let []
-        (-> db
-            (assoc :updated-error true))))
-)
+ ::failure-request-update-todo
+ (fn [db [_ result]]
+   (let []
+     (-> db
+         (assoc :updated-error true)))))
 
 
 (re-frame/reg-event-fx
@@ -76,9 +75,9 @@
     (fn [{:keys [db]} _]
         (let [form_data (:edit-form db)
               updated-form form_data
-              get-url (str "https://my-json-server.typicode.com/yvzkr/todo-json/todos/" (:id form_data) "/" )
-              ]
-             {:http-xhrio {:method          :put
+              api-url (:api-url db)
+              get-url (str api-url "/" (:id form_data) "/")]
+             {:http-xhrio {:method          :patch
                            :uri             get-url
                            :params          updated-form
                            :timeout         5000
